@@ -1,4 +1,4 @@
-# aoc-2022
+# aoc_2022
 
 A Clojure library designed to ... well, that part is up to you.
 
