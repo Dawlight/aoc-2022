@@ -1,0 +1,58 @@
+(defn run-a []
+  (solution-a input-real))
+; Syntax error compiling at (output.calva-repl:2:3).
+; Unable to resolve symbol: input-real in this context
+clj꞉aoc-2022.day01.solution꞉> 
+(ns aoc-2022.day01.solution
+  (:require [clojure.string :as str]))
+nil
+clj꞉aoc-2022.day01.solution꞉> 
+(def input-test (str/trim (slurp "./src/aoc_2022/day01/input_test")))
+(def input-real (str/trim (slurp "./src/aoc_2022/day01/input_real")))
+
+#'aoc-2022.day01.solution/input-real
+clj꞉aoc-2022.day01.solution꞉> 
+input-test
+"1000\n2000\n3000\n\n4000\n\n5000\n6000\n\n7000\n8000\n9000\n\n10000"
+clj꞉aoc-2022.day01.solution꞉> 
+(defn sum-group [group]
+  (reduce + (map #(Integer/parseInt %) (str/split group #"\n"))))
+
+#'aoc-2022.day01.solution/sum-group
+clj꞉aoc-2022.day01.solution꞉> 
+(defn compare-reverse [x, y]
+  (compare y x))
+#'aoc-2022.day01.solution/compare-reverse
+clj꞉aoc-2022.day01.solution꞉> 
+(defn solution-a [input]
+  (->> (map sum-group (str/split input #"\n\n"))
+       (sort compare-reverse)
+       (take 1)))
+#'aoc-2022.day01.solution/solution-a
+clj꞉aoc-2022.day01.solution꞉> 
+(solution-a input-test)
+(24000)
+clj꞉aoc-2022.day01.solution꞉> 
+; Evaluating file: solution.clj
+#'aoc-2022.day01.solution/run-a
+clj꞉aoc-2022.day01.solution꞉> 
+(run-a)
+(67016)
+clj꞉aoc-2022.day01.solution꞉> 
+(solution-b input-test)
+; Syntax error compiling at (output.calva-repl:42:1).
+; Unable to resolve symbol: solution-b in this context
+clj꞉aoc-2022.day01.solution꞉> 
+(defn solution-b [input]
+  (->> (map sum-group (str/split input #"\n\n"))
+       (sort compare-reverse)
+       (take 3)
+       (reduce +)))
+#'aoc-2022.day01.solution/solution-b
+clj꞉aoc-2022.day01.solution꞉> 
+(solution-b input-test)
+45000
+clj꞉aoc-2022.day01.solution꞉> 
+(solution-b input-real)
+200116
+clj꞉aoc-2022.day01.solution꞉> 
