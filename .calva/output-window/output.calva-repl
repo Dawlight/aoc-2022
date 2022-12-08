@@ -1,58 +1,325 @@
-(defn run-a []
-  (solution-a input-real))
-; Syntax error compiling at (output.calva-repl:2:3).
-; Unable to resolve symbol: input-real in this context
-clj꞉aoc-2022.day01.solution꞉> 
-(ns aoc-2022.day01.solution
-  (:require [clojure.string :as str]))
-nil
-clj꞉aoc-2022.day01.solution꞉> 
-(def input-test (str/trim (slurp "./src/aoc_2022/day01/input_test")))
-(def input-real (str/trim (slurp "./src/aoc_2022/day01/input_real")))
-
-#'aoc-2022.day01.solution/input-real
-clj꞉aoc-2022.day01.solution꞉> 
 input-test
-"1000\n2000\n3000\n\n4000\n\n5000\n6000\n\n7000\n8000\n9000\n\n10000"
-clj꞉aoc-2022.day01.solution꞉> 
-(defn sum-group [group]
-  (reduce + (map #(Integer/parseInt %) (str/split group #"\n"))))
+"A Y\nB X\nC Z"
+clj꞉aoc-2022.day02.solution꞉> 
+(->> (map #(str/split % #" ") (str/split input-test #"\n"))
+     (into [])
+     (transpose)
+     (apply map map-moves)
+     (into [])
+     (transpose)
+     (apply map get-round-score))
+(8 1 6)
+clj꞉aoc-2022.day02.solution꞉> 
+  (->> (map #(str/split % #" ") (str/split input #"\n"))
+     (into [])
+     (transpose)
+     (apply map map-moves)
+     (into [])
+     (transpose)
+     (apply map get-round-score)))
 
-#'aoc-2022.day01.solution/sum-group
-clj꞉aoc-2022.day01.solution꞉> 
-(defn compare-reverse [x, y]
-  (compare y x))
-#'aoc-2022.day01.solution/compare-reverse
-clj꞉aoc-2022.day01.solution꞉> 
-(defn solution-a [input]
-  (->> (map sum-group (str/split input #"\n\n"))
-       (sort compare-reverse)
-       (take 1)))
-#'aoc-2022.day01.solution/solution-a
-clj꞉aoc-2022.day01.solution꞉> 
-(solution-a input-test)
-(24000)
-clj꞉aoc-2022.day01.solution꞉> 
-; Evaluating file: solution.clj
-#'aoc-2022.day01.solution/run-a
-clj꞉aoc-2022.day01.solution꞉> 
-(run-a)
-(67016)
-clj꞉aoc-2022.day01.solution꞉> 
-(solution-b input-test)
-; Syntax error compiling at (output.calva-repl:42:1).
-; Unable to resolve symbol: solution-b in this context
-clj꞉aoc-2022.day01.solution꞉> 
-(defn solution-b [input]
-  (->> (map sum-group (str/split input #"\n\n"))
-       (sort compare-reverse)
-       (take 3)
+
+(solve-a input-test)
+; Syntax error compiling at (output.calva-repl:22:1).
+; Unable to resolve symbol: solve-a in this context
+clj꞉aoc-2022.day02.solution꞉> 
+(defn solve-a [input]
+  (->> (map #(str/split % #" ") (str/split input #"\n"))
+       (into [])
+       (transpose)
+       (apply map map-moves)
+       (into [])
+       (transpose)
+       (apply map get-round-score)))
+#'aoc-2022.day02.solution/solve-a
+clj꞉aoc-2022.day02.solution꞉> 
+(solve-a input-test)
+(8 1 6)
+clj꞉aoc-2022.day02.solution꞉> 
+(solve-a input-real)
+; Syntax error compiling at (output.calva-repl:39:1).
+; Unable to resolve symbol: input-real in this context
+clj꞉aoc-2022.day02.solution꞉> 
+(def input-real (str/trim (slurp "./src/aoc_2022/day02/input_real")))
+#'aoc-2022.day02.solution/input-real
+clj꞉aoc-2022.day02.solution꞉> 
+(solve-a input-real)
+(4 9 6 9 9 8 8 3 8 5 8 5 9 8 7 1 8 9 1 8 8 3 9 9 2 2 9 8 8 9 1 9 3 4 7 8 9 8 9 9 9 9 8 8 2 8 8 8 9 8 ...)
+clj꞉aoc-2022.day02.solution꞉> 
+(defn solve-a [input]
+  (->> (map #(str/split % #" ") (str/split input #"\n"))
+       (into [])
+       (transpose)
+       (apply map map-moves)
+       (into [])
+       (transpose)
+       (apply map get-round-score)
        (reduce +)))
-#'aoc-2022.day01.solution/solution-b
-clj꞉aoc-2022.day01.solution꞉> 
-(solution-b input-test)
-45000
-clj꞉aoc-2022.day01.solution꞉> 
-(solution-b input-real)
-200116
-clj꞉aoc-2022.day01.solution꞉> 
+#'aoc-2022.day02.solution/solve-a
+clj꞉aoc-2022.day02.solution꞉> 
+(solve-a input-real)
+17189
+clj꞉aoc-2022.day02.solution꞉> 
+(defn ring-nth [coll, index]
+  (nth coll (mod index (count coll))))
+#'aoc-2022.day02.solution/ring-nth
+clj꞉aoc-2022.day02.solution꞉> 
+(ring-nth [:a, :b, :c] 2)
+:c
+clj꞉aoc-2022.day02.solution꞉> 
+(ring-nth [:a, :b, :c] 3
+)
+:a
+clj꞉aoc-2022.day02.solution꞉> 
+(.indexOf [:a, :b] :b)
+1
+clj꞉aoc-2022.day02.solution꞉> 
+(defn ring-nth [coll, index]
+  (nth coll (mod index (count coll))))
+#'aoc-2022.day02.solution/ring-nth
+clj꞉aoc-2022.day02.solution꞉> 
+(def hierarchy-offset {"X" -1
+                       "Y" 0
+                       "Z" 1})
+#'aoc-2022.day02.solution/hierarchy-offset
+clj꞉aoc-2022.day02.solution꞉> 
+(def hierarchy ["A", "B", "C"])
+#'aoc-2022.day02.solution/hierarchy
+clj꞉aoc-2022.day02.solution꞉> 
+(map #(str/split % #" ") (str/split input-test #"\n"))
+(["A" "Y"] ["B" "X"] ["C" "Z"])
+clj꞉aoc-2022.day02.solution꞉> 
+(->> (map #(str/split % #" ") (str/split input-test #"\n"))
+     (into [])
+     (transpose))
+[["A" "B" "C"] ["Y" "X" "Z"]]
+clj꞉aoc-2022.day02.solution꞉> 
+(defn get-me-move [op-move, outcome]
+  (let [offset (get hierarchy-offset outcome)
+        op-move-index (.indeOf hierarchy op-move)
+        me-move-index (+ op-move-index offset)]
+    (ring-nth hierarchy me-move-index)))
+#'aoc-2022.day02.solution/get-me-move
+clj꞉aoc-2022.day02.solution꞉> 
+(->> (map #(str/split % #" ") (str/split input-test #"\n"))
+     (into [])
+     (transpose)
+     (apply map get-me-move))
+; Error printing return value (IllegalArgumentException) at clojure.lang.Reflector/invokeMatchingMethod (Reflector.java:127).
+; No matching method indeOf found taking 1 args for class clojure.lang.PersistentVector
+clj꞉aoc-2022.day02.solution꞉> 
+(->> (map #(str/split % #" ") (str/split input-test #"\n"))
+     (into [])
+     (transpose)
+)
+[["A" "B" "C"] ["Y" "X" "Z"]]
+clj꞉aoc-2022.day02.solution꞉> 
+(defn get-me-move [op-move, outcome]
+  (let [offset (get hierarchy-offset outcome)
+        op-move-index (.indexOf hierarchy op-move)
+        me-move-index (+ op-move-index offset)]
+    (ring-nth hierarchy me-move-index)))
+#'aoc-2022.day02.solution/get-me-move
+clj꞉aoc-2022.day02.solution꞉> 
+(->> (map #(str/split % #" ") (str/split input-test #"\n"))
+     (into [])
+     (transpose)
+     (apply map get-me-move))
+("A" "A" "A")
+clj꞉aoc-2022.day02.solution꞉> 
+(defn get-me-move [op-move, outcome]
+  (let [offset (get hierarchy-offset outcome)
+        op-move-index (.indexOf hierarchy op-move)]
+    (ring-nth hierarchy (+ op-move-index offset))))
+#'aoc-2022.day02.solution/get-me-move
+clj꞉aoc-2022.day02.solution꞉> 
+(->> (map #(str/split % #" ") (str/split input-test #"\n"))
+     (into [])
+     (transpose)
+     (apply map get-me-move))
+("A" "A" "A")
+clj꞉aoc-2022.day02.solution꞉> 
+(let [stuff (->> (map #(str/split % #" ") (str/split input-test #"\n")))]
+  (->> stuff
+       (into [])
+       (transpose)
+       (apply map get-me-move)
+       (vector stuff)))
+[(["A" "Y"] ["B" "X"] ["C" "Z"]) ("A" "A" "A")]
+clj꞉aoc-2022.day02.solution꞉> 
+(let [stuff (->> (map #(str/split % #" ") (str/split input-test #"\n")))]
+  (->> stuff
+       (into [])
+       (transpose)
+       (apply map get-me-move)
+       (into [])
+       (vector stuff)))
+[(["A" "Y"] ["B" "X"] ["C" "Z"]) ["A" "A" "A"]]
+clj꞉aoc-2022.day02.solution꞉> 
+(let [stuff (into [] (map #(str/split % #" ") (str/split input-test #"\n")))]
+  (->> stuff
+       (into [])
+       (transpose)
+       (apply map get-me-move)
+       (into [])
+       (vector stuff)))
+[[["A" "Y"] ["B" "X"] ["C" "Z"]] ["A" "A" "A"]]
+clj꞉aoc-2022.day02.solution꞉> 
+(let [rounds (into [] (map #(str/split % #" ") (str/split input-test #"\n")))]
+  (->> rounds
+       (into [])
+       (transpose)
+       (apply map get-me-move)
+       (into [])
+       (vector rounds)
+       (transpose)))
+[[["A" "Y"] "A"] [["B" "X"] "A"] [["C" "Z"] "A"]]
+clj꞉aoc-2022.day02.solution꞉> 
+(defn to-me-move-and-coutcome [op-move, outcome]
+  (let [offset (get hierarchy-offset outcome)
+        op-move-index (.indexOf hierarchy op-move)]
+    (vector outcome (ring-nth hierarchy (+ op-move-index offset)))))
+
+#'aoc-2022.day02.solution/to-me-move-and-coutcome
+clj꞉aoc-2022.day02.solution꞉> 
+(->> (map #(str/split % #" ") (str/split input-test #"\n"))
+     (into [])
+     (transpose)
+     (apply map to-me-move-and-coutcome))
+(["Y" "A"] ["X" "A"] ["Z" "A"])
+clj꞉aoc-2022.day02.solution꞉> 
+(defn to-me-move-and-coutcome [op-move, outcome]
+  (let [offset (get hierarchy-offset outcome)
+        op-move-index (.indexOf hierarchy op-move)]
+    (vector (ring-nth hierarchy (+ op-move-index offset)) outcome)))
+#'aoc-2022.day02.solution/to-me-move-and-coutcome
+clj꞉aoc-2022.day02.solution꞉> 
+(->> (map #(str/split % #" ") (str/split input-test #"\n"))
+     (into [])
+     (transpose)
+     (apply map to-me-move-and-coutcome))
+(["A" "Y"] ["A" "X"] ["A" "Z"])
+clj꞉aoc-2022.day02.solution꞉> 
+(defn to-score [me-move, outcome]
+  (vector (+ (.indexOf hierarchy me-move) 1) (get outcome-score outcome)))
+; Syntax error compiling at (output.calva-repl:204:46).
+; Unable to resolve symbol: outcome-score in this context
+clj꞉aoc-2022.day02.solution꞉> 
+(->> (map #(str/split % #" ") (str/split input-test #"\n"))
+     (into [])
+     (transpose)
+     (apply map to-me-move-and-coutcome)
+     (into [])
+     (transpose)
+     (apply map to-score))
+; Error printing return value (IllegalStateException) at clojure.lang.Var$Unbound/throwArity (Var.java:45).
+; Attempting to call unbound fn: #'aoc-2022.day02.solution/to-score
+clj꞉aoc-2022.day02.solution꞉> 
+(->> (map #(str/split % #" ") (str/split input-test #"\n"))
+     (into [])
+     (transpose)
+     (apply map to-me-move-and-coutcome)
+     (into [])
+     (transpose)
+)
+[["A" "A" "A"] ["Y" "X" "Z"]]
+clj꞉aoc-2022.day02.solution꞉> 
+(defn to-score [me-move, outcome]
+  (vector (+ (.indexOf hierarchy me-move) 1) (get outcome-score outcome)))
+
+; Syntax error compiling at (output.calva-repl:228:46).
+; Unable to resolve symbol: outcome-score in this context
+clj꞉aoc-2022.day02.solution꞉> 
+(def outcome-score {"X" 0
+                    "Y" 3
+                    "Z" 6})
+#'aoc-2022.day02.solution/outcome-score
+clj꞉aoc-2022.day02.solution꞉> 
+(defn to-score [me-move, outcome]
+  (vector (+ (.indexOf hierarchy me-move) 1) (get outcome-score outcome)))
+
+#'aoc-2022.day02.solution/to-score
+clj꞉aoc-2022.day02.solution꞉> 
+(->> (map #(str/split % #" ") (str/split input-test #"\n"))
+     (into [])
+     (transpose)
+     (apply map to-me-move-and-coutcome)
+     (into [])
+     (transpose)
+     (apply map to-score))
+([1 3] [1 0] [1 6])
+clj꞉aoc-2022.day02.solution꞉> 
+(->> (map #(str/split % #" ") (str/split input-test #"\n"))
+     (into [])
+     (transpose)
+     (apply map to-me-move-and-coutcome)
+     (into [])
+     (transpose)
+     (apply map to-score)
+     (into [])
+     (transpose))
+[[1 1 1] [3 0 6]]
+clj꞉aoc-2022.day02.solution꞉> 
+(->> (map #(str/split % #" ") (str/split input-test #"\n"))
+     (into [])
+     (transpose)
+     (apply map to-me-move-and-coutcome)
+     (into [])
+     (transpose)
+     (apply map to-score)
+     (into [])
+     (transpose)
+     (apply map +))
+(4 1 7)
+clj꞉aoc-2022.day02.solution꞉> 
+(->> (map #(str/split % #" ") (str/split input-test #"\n"))
+     (into [])
+     (transpose)
+     (apply map to-me-move-and-coutcome)
+     (into [])
+     (transpose)
+     (apply map to-score)
+     (into [])
+     (transpose)
+     (apply map +)
+     (reduce +))
+12
+clj꞉aoc-2022.day02.solution꞉> 
+(defn solve-b [input] 
+  (->> (map #(str/split % #" ") (str/split input #"\n"))
+       (into [])
+       (transpose)
+       (apply map to-me-move-and-coutcome)
+       (into [])
+       (transpose)
+       (apply map to-score)
+       (into [])
+       (transpose)
+       (apply map +)
+; Execution error (IllegalArgumentException) at aoc-2022.day02.solution/eval8466 (form-init7797003569795930320.clj:298).
+; Don't know how to create ISeq from: clojure.core$_PLUS_
+clj꞉aoc-2022.day02.solution꞉> 
+(solve-b input-test)
+; Syntax error compiling at (output.calva-repl:302:1).
+; Unable to resolve symbol: solve-b in this context
+clj꞉aoc-2022.day02.solution꞉> 
+(defn solve-b [input]
+  (->> (map #(str/split % #" ") (str/split input #"\n"))
+       (into [])
+       (transpose)
+       (apply map to-me-move-and-coutcome)
+       (into [])
+       (transpose)
+       (apply map to-score)
+       (into [])
+       (transpose)
+       (apply map +)
+       (reduce +)))
+#'aoc-2022.day02.solution/solve-b
+clj꞉aoc-2022.day02.solution꞉> 
+(solve-b input-test)
+12
+clj꞉aoc-2022.day02.solution꞉> 
+(solve-b input-real)
+13490
+clj꞉aoc-2022.day02.solution꞉> 
