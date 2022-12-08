@@ -41,11 +41,9 @@
 
 
 (defn solve-a [input] 
-  (->> (map #(str/split % #" ") (str/split input #"\n"))
-       (into [])
+  (->> (mapv #(str/split % #" ") (str/split input #"\n")) 
        (transpose)
-       (apply map map-moves)
-       (into [])
+       (apply mapv map-moves)
        (transpose)
        (apply map get-round-score)
        (reduce +)))
@@ -75,16 +73,13 @@
 
 
 (defn solve-b [input] 
-  (->> (map #(str/split % #" ") (str/split input #"\n"))
-       (into [])
+  (->> (mapv #(str/split % #" ") (str/split input #"\n"))
        (transpose)
-       (apply map to-me-move-and-coutcome)
-       (into [])
+       (apply mapv to-me-move-and-coutcome)
        (transpose)
-       (apply map to-score)
-       (into [])
+       (apply mapv to-score) 
        (transpose)
-       (apply map +)
+       (apply mapv +)
        (reduce +)))
 
 (solve-b input-real)
