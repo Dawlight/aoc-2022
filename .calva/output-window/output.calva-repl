@@ -1,481 +1,373 @@
-(split-at 5 "tjosanhejsan")
-[(\t \j \o \s \a) (\n \h \e \j \s \a \n)]
-clj꞉aoc-2022.day03.solution꞉> 
-(def input-test (str/trim (slurp "./src/aoc_2022/day03/input_test")))
-; Syntax error compiling at (output.calva-repl:4:17).
-; No such namespace: str
-clj꞉aoc-2022.day03.solution꞉> 
-(str/split input-test #"\n")
-; Syntax error compiling at (output.calva-repl:8:1).
-; No such namespace: str
-clj꞉aoc-2022.day03.solution꞉> 
-(ns aoc-2022.day03.solution
-  (:require [clojure.string :as str]))
+(ns aoc-2022.day04.solution
+  (:require [clojure.string :as str]
+            [clojure.set]))
 nil
-clj꞉aoc-2022.day03.solution꞉> 
-(def input-test (str/trim (slurp "./src/aoc_2022/day03/input_test")))
-#'aoc-2022.day03.solution/input-test
-clj꞉aoc-2022.day03.solution꞉> 
-(str/split input-test #"\n")
-["vJrwpWtwJgWrhcsFMMfFFhFp"
- "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL"
- "PmmdzqPrVvPwwTWBwg"
- "wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn"
- "ttgJtRGJQctTZtZT"
- "CrZsJsPPZsGzwwsLwLmpwMDw"]
-clj꞉aoc-2022.day03.solution꞉> 
-(map #(split-at (/ (count %) 2) %) (str/split input-test #"\n"))
-([(\v \J \r \w \p \W \t \w \J \g \W \r) (\h \c \s \F \M \M \f \F \F \h \F \p)]
- [(\j \q \H \R \N \q \R \j \q \z \j \G \D \L \G \L) (\r \s \F \M \f \F \Z \S \r \L \r \F \Z \s \S \L)]
- [(\P \m \m \d \z \q \P \r \V) (\v \P \w \w \T \W \B \w \g)]
- [(\w \M \q \v \L \M \Z \H \h \H \M \v \w \L \H) (\j \b \v \c \j \n \n \S \B \n \v \T \Q \F \n)]
- [(\t \t \g \J \t \R \G \J) (\Q \c \t \T \Z \t \Z \T)]
- [(\C \r \Z \s \J \s \P \P \Z \s \G \z) (\w \w \s \L \w \L \m \p \w \M \D \w)])
-clj꞉aoc-2022.day03.solution꞉> 
-(str '(\v \J \r \w \p \W \t \w \J \g \W \r))
-"(\\v \\J \\r \\w \\p \\W \\t \\w \\J \\g \\W \\r)"
-clj꞉aoc-2022.day03.solution꞉> 
-(->> (map #(split-at (/ (count %) 2) %) (str/split input-test #"\n"))
-     (apply map #(vector (apply str %1) (apply str %2))))
-; Error printing return value (ArityException) at clojure.lang.AFn/throwArity (AFn.java:429).
-; Wrong number of args (6) passed to: aoc-2022.day03.solution/eval8594/fn--8595
-clj꞉aoc-2022.day03.solution꞉> 
-(map #(split-at (/ (count %) 2) %) (str/split input-test #"\n"))
-([(\v \J \r \w \p \W \t \w \J \g \W \r) (\h \c \s \F \M \M \f \F \F \h \F \p)]
- [(\j \q \H \R \N \q \R \j \q \z \j \G \D \L \G \L) (\r \s \F \M \f \F \Z \S \r \L \r \F \Z \s \S \L)]
- [(\P \m \m \d \z \q \P \r \V) (\v \P \w \w \T \W \B \w \g)]
- [(\w \M \q \v \L \M \Z \H \h \H \M \v \w \L \H) (\j \b \v \c \j \n \n \S \B \n \v \T \Q \F \n)]
- [(\t \t \g \J \t \R \G \J) (\Q \c \t \T \Z \t \Z \T)]
- [(\C \r \Z \s \J \s \P \P \Z \s \G \z) (\w \w \s \L \w \L \m \p \w \M \D \w)])
-clj꞉aoc-2022.day03.solution꞉> 
-(->> (map #(split-at (/ (count %) 2) %) (str/split input-test #"\n"))
-     (into [])
-)
-[[(\v \J \r \w \p \W \t \w \J \g \W \r) (\h \c \s \F \M \M \f \F \F \h \F \p)]
- [(\j \q \H \R \N \q \R \j \q \z \j \G \D \L \G \L) (\r \s \F \M \f \F \Z \S \r \L \r \F \Z \s \S \L)]
- [(\P \m \m \d \z \q \P \r \V) (\v \P \w \w \T \W \B \w \g)]
- [(\w \M \q \v \L \M \Z \H \h \H \M \v \w \L \H) (\j \b \v \c \j \n \n \S \B \n \v \T \Q \F \n)]
- [(\t \t \g \J \t \R \G \J) (\Q \c \t \T \Z \t \Z \T)]
- [(\C \r \Z \s \J \s \P \P \Z \s \G \z) (\w \w \s \L \w \L \m \p \w \M \D \w)]]
-clj꞉aoc-2022.day03.solution꞉> 
-(str/split input-test #"\n")
-(map #(split-at (/ (count %) 2) %) (str/split input-test #"\n"))
-([(\v \J \r \w \p \W \t \w \J \g \W \r) (\h \c \s \F \M \M \f \F \F \h \F \p)]
- [(\j \q \H \R \N \q \R \j \q \z \j \G \D \L \G \L) (\r \s \F \M \f \F \Z \S \r \L \r \F \Z \s \S \L)]
- [(\P \m \m \d \z \q \P \r \V) (\v \P \w \w \T \W \B \w \g)]
- [(\w \M \q \v \L \M \Z \H \h \H \M \v \w \L \H) (\j \b \v \c \j \n \n \S \B \n \v \T \Q \F \n)]
- [(\t \t \g \J \t \R \G \J) (\Q \c \t \T \Z \t \Z \T)]
- [(\C \r \Z \s \J \s \P \P \Z \s \G \z) (\w \w \s \L \w \L \m \p \w \M \D \w)])
-clj꞉aoc-2022.day03.solution꞉> 
-(->> (map #(split-at (/ (count %) 2) %) (str/split input-test #"\n"))
-     (into []))
-[[(\v \J \r \w \p \W \t \w \J \g \W \r) (\h \c \s \F \M \M \f \F \F \h \F \p)]
- [(\j \q \H \R \N \q \R \j \q \z \j \G \D \L \G \L) (\r \s \F \M \f \F \Z \S \r \L \r \F \Z \s \S \L)]
- [(\P \m \m \d \z \q \P \r \V) (\v \P \w \w \T \W \B \w \g)]
- [(\w \M \q \v \L \M \Z \H \h \H \M \v \w \L \H) (\j \b \v \c \j \n \n \S \B \n \v \T \Q \F \n)]
- [(\t \t \g \J \t \R \G \J) (\Q \c \t \T \Z \t \Z \T)]
- [(\C \r \Z \s \J \s \P \P \Z \s \G \z) (\w \w \s \L \w \L \m \p \w \M \D \w)]]
-clj꞉aoc-2022.day03.solution꞉> 
-(defn solve-a [input]
-  (->> (map #(str/split % #" ") (str/split input #"\n"))
-       (into [])
-       (transpose)
-       (apply map map-moves)
-       (into [])
-       (transpose)
-       (apply map get-round-score)
-       (reduce +)))
-#'aoc-2022.day02.solution/solve-a
-clj꞉aoc-2022.day02.solution꞉> 
-(def input-real (str/trim (slurp "./src/aoc_2022/day02/input_real")))
-#'aoc-2022.day02.solution/input-real
-clj꞉aoc-2022.day02.solution꞉> 
-(solve-a input-real)
-17189
-clj꞉aoc-2022.day02.solution꞉> 
-(defn solve-a [input]
-  (->> (map #(str/split % #" ") (str/split input #"\n"))
-       (into [])
-       (transpose)
-       (apply mapv map-moves)
-       (transpose)
-       (apply map get-round-score)
-       (reduce +)))
-#'aoc-2022.day02.solution/solve-a
-clj꞉aoc-2022.day02.solution꞉> 
-(solve-a input-real)
+clj꞉aoc-2022.day04.solution꞉> 
+(def input-test (str/trim (slurp "./src/aoc_2022/day04/input_test")))
 
-17189
-clj꞉aoc-2022.day02.solution꞉> 
-(defn solve-a [input]
-  (->> (mapv #(str/split % #" ") (str/split input #"\n"))
-       (transpose)
-       (apply mapv map-moves)
-       (transpose)
-       (apply map get-round-score)
-       (reduce +)))
-#'aoc-2022.day02.solution/solve-a
-clj꞉aoc-2022.day02.solution꞉> 
-(solve-a input-real)
-17189
-clj꞉aoc-2022.day02.solution꞉> 
-(defn solve-b [input]
-  (->> (mapv #(str/split % #" ") (str/split input #"\n"))
-       (transpose)
-       (apply mapv to-me-move-and-coutcome)
-       (transpose)
-       (apply mapv to-score)
-       (transpose)
-       (apply mapv +)
-       (reduce +)))
-#'aoc-2022.day02.solution/solve-b
-clj꞉aoc-2022.day02.solution꞉> 
-#'aoc-2022.day02.solution/solve-b
-clj꞉aoc-2022.day02.solution꞉> 
-(solve-b input-real)
-13490
-clj꞉aoc-2022.day02.solution꞉> 
-(def input-test (str/trim (slurp "./src/aoc_2022/day03/input_test")))
-#'aoc-2022.day03.solution/input-test
-clj꞉aoc-2022.day03.solution꞉> 
-(mapv #(split-at (/ (count %) 2) %) (str/split input-test #"\n"))
-[[(\v \J \r \w \p \W \t \w \J \g \W \r) (\h \c \s \F \M \M \f \F \F \h \F \p)]
- [(\j \q \H \R \N \q \R \j \q \z \j \G \D \L \G \L) (\r \s \F \M \f \F \Z \S \r \L \r \F \Z \s \S \L)]
- [(\P \m \m \d \z \q \P \r \V) (\v \P \w \w \T \W \B \w \g)]
- [(\w \M \q \v \L \M \Z \H \h \H \M \v \w \L \H) (\j \b \v \c \j \n \n \S \B \n \v \T \Q \F \n)]
- [(\t \t \g \J \t \R \G \J) (\Q \c \t \T \Z \t \Z \T)]
- [(\C \r \Z \s \J \s \P \P \Z \s \G \z) (\w \w \s \L \w \L \m \p \w \M \D \w)]]
-clj꞉aoc-2022.day03.solution꞉> 
-(defn get-distinct-compartments [first, second]
-  (vector (distinct first) (distinct second)))
-#'aoc-2022.day03.solution/get-distinct-compartments
-clj꞉aoc-2022.day03.solution꞉> 
-(->> (mapv #(split-at (/ (count %) 2) %) (str/split input-test #"\n"))
-     (apply mapv get-distinct-compartments))
+#'aoc-2022.day04.solution/input-test
+clj꞉aoc-2022.day04.solution꞉> 
+(defn transpose [matrix]
+  (apply mapv vector matrix))
+#'aoc-2022.day04.solution/transpose
+clj꞉aoc-2022.day04.solution꞉> 
+(def pairs (for [pair (str/split input-test #"\n")]
+             (into [] (for [sections (str/split pair #",")] sections))))
+#'aoc-2022.day04.solution/pairs
+clj꞉aoc-2022.day04.solution꞉> 
+(def split-pairs (for [pair pairs]
+                   (map #(str/split % #"-") pair)))
+#'aoc-2022.day04.solution/split-pairs
+clj꞉aoc-2022.day04.solution꞉> 
+(defn subset-of-other [set-pair]
+  (let [[a b] set-pair]
+    (or (clojure.set/subset? a b) (clojure.set/subset? b a))))
+#'aoc-2022.day04.solution/subset-of-other
+clj꞉aoc-2022.day04.solution꞉> 
+(->> (map #(Integer/parseInt %) (flatten split-pairs))
+     (partition 2)
+     (transpose)
+     (apply map #(range %1 (+ %2 1)))
+     (map set)
+     (partition 2)
+     (filter subset-of-other))
+((#{7 4 6 3 2 5 8} #{7 4 6 3 5}) (#{6} #{4 6 5}))
+clj꞉aoc-2022.day04.solution꞉> 
+(->> (map #(Integer/parseInt %) (flatten split-pairs))
+     (partition 2)
+     (transpose)
+     (apply map #(range %1 (+ %2 1)))
+     (map set)
+     (partition 2)
+     (filter subset-of-other)
+     (count))
+2
+clj꞉aoc-2022.day04.solution꞉> 
+(def input-real (str/trim (slurp "./src/aoc_2022/day04/input_real")))
+#'aoc-2022.day04.solution/input-real
+clj꞉aoc-2022.day04.solution꞉> 
+(def pairs (for [pair (str/split input-real #"\n")]
+             (into [] (for [sections (str/split pair #",")] sections))))
 
-; Execution error (ArityException) at aoc-2022.day03.solution/eval8711 (form-init7797003569795930320.clj:154).
-; Wrong number of args (6) passed to: aoc-2022.day03.solution/get-distinct-compartments
-clj꞉aoc-2022.day03.solution꞉> 
-(defn get-distinct-compartments [first, second]
-  (vector (distinct first) (distinct second)))
-#'aoc-2022.day03.solution/get-distinct-compartments
-clj꞉aoc-2022.day03.solution꞉> 
-(def backpacks (mapv #(split-at (/ (count %) 2) %) (str/split input-test #"\n")))
-#'aoc-2022.day03.solution/backpacks
-clj꞉aoc-2022.day03.solution꞉> 
-(for [backpack backpacks]
-  (apply get-distinct-compartments backpack))
-([(\v \J \r \w \p \W \t \g) (\h \c \s \F \M \f \p)]
- [(\j \q \H \R \N \z \G \D \L) (\r \s \F \M \f \Z \S \L)]
- [(\P \m \d \z \q \r \V) (\v \P \w \T \W \B \g)]
- [(\w \M \q \v \L \Z \H \h) (\j \b \v \c \n \S \B \T \Q \F)]
- [(\t \g \J \R \G) (\Q \c \t \T \Z)]
- [(\C \r \Z \s \J \P \G \z) (\w \s \L \m \p \M \D)])
-clj꞉aoc-2022.day03.solution꞉> 
-(defn get-distinct-compartments [first, second]
-  (vector (set first) (set second)))
-#'aoc-2022.day03.solution/get-distinct-compartments
-clj꞉aoc-2022.day03.solution꞉> 
-(for [backpack backpacks]
-  (apply get-distinct-compartments backpack))
-([#{\g \J \p \r \t \v \W \w} #{\c \F \f \h \M \p \s}]
- [#{\D \G \H \j \L \N \q \R \z} #{\F \f \L \M \r \S \s \Z}]
- [#{\d \m \P \q \r \V \z} #{\B \g \P \T \v \W \w}]
- [#{\H \h \L \M \q \v \w \Z} #{\B \b \c \F \j \n \Q \S \T \v}]
- [#{\G \g \J \R \t} #{\c \Q \T \t \Z}]
- [#{\C \G \J \P \r \s \Z \z} #{\D \L \M \m \p \s \w}])
-clj꞉aoc-2022.day03.solution꞉> 
-(defn get-distinct-compartments [first, second]
-  (set/intersection (set first) (set second)))
-; Syntax error compiling at (output.calva-repl:189:3).
-; No such namespace: set
-clj꞉aoc-2022.day03.solution꞉> 
-(defn get-distinct-compartments [first, second]
-  (clojure.set/intersection (set first) (set second)))
-#'aoc-2022.day03.solution/get-distinct-compartments
-clj꞉aoc-2022.day03.solution꞉> 
-(def backpacks (mapv #(split-at (/ (count %) 2) %) (str/split input-test #"\n")))
-#'aoc-2022.day03.solution/backpacks
-clj꞉aoc-2022.day03.solution꞉> 
-(for [backpack backpacks]
-  (apply get-distinct-compartments backpack))
+#'aoc-2022.day04.solution/pairs
+clj꞉aoc-2022.day04.solution꞉> 
+(def split-pairs (for [pair pairs]
+                   (map #(str/split % #"-") pair)))
 
-(#{\p} #{\L} #{\P} #{\v} #{\t} #{\s})
-clj꞉aoc-2022.day03.solution꞉> 
-(defn get-distinct-compartments [first, second]
-  (nth (vec (clojure.set/intersection (set first) (set second))) 0))
-#'aoc-2022.day03.solution/get-distinct-compartments
-clj꞉aoc-2022.day03.solution꞉> 
-(for [backpack backpacks]
-  (apply get-distinct-compartments backpack))
-(\p \L \P \v \t \s)
-clj꞉aoc-2022.day03.solution꞉> 
-(defn get-common-type [first, second]
-  (nth (vec (clojure.set/intersection (set first) (set second))) 0))
-#'aoc-2022.day03.solution/get-common-type
-clj꞉aoc-2022.day03.solution꞉> 
-(for [backpack backpacks]
-  (apply get-common-type backpack))
+#'aoc-2022.day04.solution/split-pairs
+clj꞉aoc-2022.day04.solution꞉> 
+(->> (map #(Integer/parseInt %) (flatten split-pairs))
+     (partition 2)
+     (transpose)
+     (apply map #(range %1 (+ %2 1)))
+     (map set)
+     (partition 2)
+     (filter subset-of-other)
+     (count))
+; Execution error (NumberFormatException) at java.lang.NumberFormatException/forInputString (NumberFormatException.java:65).
+; For input string: "jVTBgVbgJQVrTLRRsLvRzWcZvnDs"
+clj꞉aoc-2022.day04.solution꞉> 
+(def pairs (for [pair (str/split input-real #"\n")]
+             (into [] (for [sections (str/split pair #",")] sections))))
+#'aoc-2022.day04.solution/pairs
+clj꞉aoc-2022.day04.solution꞉> 
+pairs
+(["jVTBgVbgJQVrTLRRsLvRzWcZvnDs"]
+ ["dhtmhfdfNlNNldfqmPCflqGbNZDHsDWcRzvczWsczZNzHz"]
+ ["tmwwwCCfbJSMbwMb"]
+ ["hsrZZhHlhrHmPPbMbDFDQdnQgLfMFDdDQQ"]
+ ["GpBtwtqrcCcjgnLgqfgDDgRn"]
+ ["cJwVwpCpGJctJtBcCrSCGrVJhlsbvSvTvbmHmmsWmHslmsHm"]
+ ["gCtWJvmfmGGwVVMhJw"]
+ ["nzRSpZbSVFFRDFSDzcplddqplqMhQMclMp"]
+ ["zFLszzRTDnZnbTZTRZsVNgCjrvfvgtvNmtfvLW"]
+ ["glRQRpQQtQtGtQws"]
+ ["TnmbLqvBFRFFLPBFnPbvRBhshTtHWhwzdwtHdsdzWhws"]
+ ["qmCLPNmCFnLBnmPPqVbFLRrJjVggDgJjlZVVDjDlDD"]
+ ["vRRgpWvPQFdTFDDNQs"]
+ ["bqtCmltmlbwqLVLZqwtmLBBTMcGBddTTBgFNGcZGMD"]
+ ["bbtmJmjlVlwblwwbwzbbvrrznvzShgRhRvhfWrWn"]
+ ["ZMhThfNcpbbMNNjsHpmpsRqsPmRs"]
+ ["wQjDgggQDPqqDlsD"]
+ ["SCwSzvLVCSVtQVgLnrccfdGdTdZfcZMtjJhG"]
+ ["wNnNmNHnNPPwwPGCrLSZZvdVVZvBtMMvdm"]
+ ["WQzlhzjzbBtMMlBrMl"]
+ ["szbgWhJjTTcsWTqgzsqcsGHfwNcwfwnHHrCGCPPGwr"]
+ ["CNsbpFCMSrmDhQHNNGmH"]
+ ["fQPPPcqvljQzjVDDgRBhGGqDgqqD"]
+ ["ZctlcVzcfltQtnrndbQMCM"]
+ ["NQjQjQvZvZjcvrrrNjgTQgBQwTJsJswJlbGstqqtmGhmwhqw"]
+ ["PWpHRzRnPHHSCnPFwlqhbtqGZClJqGqG"]
+ ["ZzVpMpWPHnVzzpWzDRzSZrcdDQdrQNrcQgQfjcNfjf"]
+ ["BSZMtdtZBzMFvhCbBJDbhDDC"]
+ ["qcqVVmccrmVcjrlHqTrjDJRPQhWvPWWfPvblffDf"]
+ ["cHTrbGwpmGwVjdFMnzpLznMztd"]
+ ["DGDGGbNgTgJQQLMRMMTNVzvPsPbdsfPVsdVVZfPf"]
+ ["lcCmmlpwwnwSjCHtFpCpHzCrZsVrBZZzdvDfVrsfZd"]
+ ["lSHwnjpFmppHqppttttcFmnhMLGNRLhTMDqJLQNLLQNLhJ"]
+ ["WqWfDWBjBjLbfcbbqGbWqQsrFFztsppMFCzgCJzJCrFpCM"]
+ ["VRlhdHZTZVRRmZwlmFrJwFpMMDDrrrtJwg"]
+ ["PPVddvvDZmRmHvndTHmLcbcjSjLQBGWGGQWSqP"]
+ ["HHvgvwHMPMwHwmcRfJNFchFGNNCm"]
+ ["BsTDsjzBCCBJGffN"]
+ ["jznSnSdqzqnQTbdDljQjQSMHWWvvgWvtZlrWpPfWwtPr"]
+ ["DJCJJCNjCDRfDfDRhDnNhfjFPgbGbddBTjFdTFTPbgGSdF"]
+ ["cmMcMVqBZVcwsGFgGqgWdFqb"]
+ ["vcZVzwmHVcrtrwMMvvmBHwNNCDpQRfhLhrNJNfJDDDRC"]
+ ["VWSSScsncpDRdnsWsVncVzTwMMMHtMTrLTLMMVHM"]
+ ["fjJvQqBCQNhfQlZZnqmFHLFMTFTzwzLzrHMB"]
+ ["CqfjjQZJPjjvpRppDPgbnSnP"]
+ ["tLnjNwjRWttdCwRLsfGzfzPbzbWbQQPT"]
+ ["cvvBvlBrFrlTffsbfTqZ"]
+ ["vmrFpsrvFMMMNwhtDwhN"]
+ ["wzgRNqwtgzMWtqGwCssBBSBZnSRsrQQS"]
+ ["bbjLTmpjpHcpVncVdmffPCDrjZDSDsZffDQC"]
+ ...)
+clj꞉aoc-2022.day04.solution꞉> 
+(def split-pairs (for [pair pairs]
+                   (map #(str/split % #"-") pair)))
+#'aoc-2022.day04.solution/split-pairs
+clj꞉aoc-2022.day04.solution꞉> 
+split-pairs
+((["jVTBgVbgJQVrTLRRsLvRzWcZvnDs"])
+ (["dhtmhfdfNlNNldfqmPCflqGbNZDHsDWcRzvczWsczZNzHz"])
+ (["tmwwwCCfbJSMbwMb"])
+ (["hsrZZhHlhrHmPPbMbDFDQdnQgLfMFDdDQQ"])
+ (["GpBtwtqrcCcjgnLgqfgDDgRn"])
+ (["cJwVwpCpGJctJtBcCrSCGrVJhlsbvSvTvbmHmmsWmHslmsHm"])
+ (["gCtWJvmfmGGwVVMhJw"])
+ (["nzRSpZbSVFFRDFSDzcplddqplqMhQMclMp"])
+ (["zFLszzRTDnZnbTZTRZsVNgCjrvfvgtvNmtfvLW"])
+ (["glRQRpQQtQtGtQws"])
+ (["TnmbLqvBFRFFLPBFnPbvRBhshTtHWhwzdwtHdsdzWhws"])
+ (["qmCLPNmCFnLBnmPPqVbFLRrJjVggDgJjlZVVDjDlDD"])
+ (["vRRgpWvPQFdTFDDNQs"])
+ (["bqtCmltmlbwqLVLZqwtmLBBTMcGBddTTBgFNGcZGMD"])
+ (["bbtmJmjlVlwblwwbwzbbvrrznvzShgRhRvhfWrWn"])
+ (["ZMhThfNcpbbMNNjsHpmpsRqsPmRs"])
+ (["wQjDgggQDPqqDlsD"])
+ (["SCwSzvLVCSVtQVgLnrccfdGdTdZfcZMtjJhG"])
+ (["wNnNmNHnNPPwwPGCrLSZZvdVVZvBtMMvdm"])
+ (["WQzlhzjzbBtMMlBrMl"])
+ (["szbgWhJjTTcsWTqgzsqcsGHfwNcwfwnHHrCGCPPGwr"])
+ (["CNsbpFCMSrmDhQHNNGmH"])
+ (["fQPPPcqvljQzjVDDgRBhGGqDgqqD"])
+ (["ZctlcVzcfltQtnrndbQMCM"])
+ (["NQjQjQvZvZjcvrrrNjgTQgBQwTJsJswJlbGstqqtmGhmwhqw"])
+ (["PWpHRzRnPHHSCnPFwlqhbtqGZClJqGqG"])
+ (["ZzVpMpWPHnVzzpWzDRzSZrcdDQdrQNrcQgQfjcNfjf"])
+ (["BSZMtdtZBzMFvhCbBJDbhDDC"])
+ (["qcqVVmccrmVcjrlHqTrjDJRPQhWvPWWfPvblffDf"])
+ (["cHTrbGwpmGwVjdFMnzpLznMztd"])
+ (["DGDGGbNgTgJQQLMRMMTNVzvPsPbdsfPVsdVVZfPf"])
+ (["lcCmmlpwwnwSjCHtFpCpHzCrZsVrBZZzdvDfVrsfZd"])
+ (["lSHwnjpFmppHqppttttcFmnhMLGNRLhTMDqJLQNLLQNLhJ"])
+ (["WqWfDWBjBjLbfcbbqGbWqQsrFFztsppMFCzgCJzJCrFpCM"])
+ (["VRlhdHZTZVRRmZwlmFrJwFpMMDDrrrtJwg"])
+ (["PPVddvvDZmRmHvndTHmLcbcjSjLQBGWGGQWSqP"])
+ (["HHvgvwHMPMwHwmcRfJNFchFGNNCm"])
+ (["BsTDsjzBCCBJGffN"])
+ (["jznSnSdqzqnQTbdDljQjQSMHWWvvgWvtZlrWpPfWwtPr"])
+ (["DJCJJCNjCDRfDfDRhDnNhfjFPgbGbddBTjFdTFTPbgGSdF"])
+ (["cmMcMVqBZVcwsGFgGqgWdFqb"])
+ (["vcZVzwmHVcrtrwMMvvmBHwNNCDpQRfhLhrNJNfJDDDRC"])
+ (["VWSSScsncpDRdnsWsVncVzTwMMMHtMTrLTLMMVHM"])
+ (["fjJvQqBCQNhfQlZZnqmFHLFMTFTzwzLzrHMB"])
+ (["CqfjjQZJPjjvpRppDPgbnSnP"])
+ (["tLnjNwjRWttdCwRLsfGzfzPbzbWbQQPT"])
+ (["cvvBvlBrFrlTffsbfTqZ"])
+ (["vmrFpsrvFMMMNwhtDwhN"])
+ (["wzgRNqwtgzMWtqGwCssBBSBZnSRsrQQS"])
+ (["bbjLTmpjpHcpVncVdmffPCDrjZDSDsZffDQC"])
+ ...)
+clj꞉aoc-2022.day04.solution꞉> 
+(def input-real (str/trim (slurp "./src/aoc_2022/day04/input_real")))
+#'aoc-2022.day04.solution/input-real
+clj꞉aoc-2022.day04.solution꞉> 
+(def pairs (for [pair (str/split input-real #"\n")]
+             (into [] (for [sections (str/split pair #",")] sections))))
+#'aoc-2022.day04.solution/pairs
+clj꞉aoc-2022.day04.solution꞉> 
+pairs
+(["jVTBgVbgJQVrTLRRsLvRzWcZvnDs"]
+ ["dhtmhfdfNlNNldfqmPCflqGbNZDHsDWcRzvczWsczZNzHz"]
+ ["tmwwwCCfbJSMbwMb"]
+ ["hsrZZhHlhrHmPPbMbDFDQdnQgLfMFDdDQQ"]
+ ["GpBtwtqrcCcjgnLgqfgDDgRn"]
+ ["cJwVwpCpGJctJtBcCrSCGrVJhlsbvSvTvbmHmmsWmHslmsHm"]
+ ["gCtWJvmfmGGwVVMhJw"]
+ ["nzRSpZbSVFFRDFSDzcplddqplqMhQMclMp"]
+ ["zFLszzRTDnZnbTZTRZsVNgCjrvfvgtvNmtfvLW"]
+ ["glRQRpQQtQtGtQws"]
+ ["TnmbLqvBFRFFLPBFnPbvRBhshTtHWhwzdwtHdsdzWhws"]
+ ["qmCLPNmCFnLBnmPPqVbFLRrJjVggDgJjlZVVDjDlDD"]
+ ["vRRgpWvPQFdTFDDNQs"]
+ ["bqtCmltmlbwqLVLZqwtmLBBTMcGBddTTBgFNGcZGMD"]
+ ["bbtmJmjlVlwblwwbwzbbvrrznvzShgRhRvhfWrWn"]
+ ["ZMhThfNcpbbMNNjsHpmpsRqsPmRs"]
+ ["wQjDgggQDPqqDlsD"]
+ ["SCwSzvLVCSVtQVgLnrccfdGdTdZfcZMtjJhG"]
+ ["wNnNmNHnNPPwwPGCrLSZZvdVVZvBtMMvdm"]
+ ["WQzlhzjzbBtMMlBrMl"]
+ ["szbgWhJjTTcsWTqgzsqcsGHfwNcwfwnHHrCGCPPGwr"]
+ ["CNsbpFCMSrmDhQHNNGmH"]
+ ["fQPPPcqvljQzjVDDgRBhGGqDgqqD"]
+ ["ZctlcVzcfltQtnrndbQMCM"]
+ ["NQjQjQvZvZjcvrrrNjgTQgBQwTJsJswJlbGstqqtmGhmwhqw"]
+ ["PWpHRzRnPHHSCnPFwlqhbtqGZClJqGqG"]
+ ["ZzVpMpWPHnVzzpWzDRzSZrcdDQdrQNrcQgQfjcNfjf"]
+ ["BSZMtdtZBzMFvhCbBJDbhDDC"]
+ ["qcqVVmccrmVcjrlHqTrjDJRPQhWvPWWfPvblffDf"]
+ ["cHTrbGwpmGwVjdFMnzpLznMztd"]
+ ["DGDGGbNgTgJQQLMRMMTNVzvPsPbdsfPVsdVVZfPf"]
+ ["lcCmmlpwwnwSjCHtFpCpHzCrZsVrBZZzdvDfVrsfZd"]
+ ["lSHwnjpFmppHqppttttcFmnhMLGNRLhTMDqJLQNLLQNLhJ"]
+ ["WqWfDWBjBjLbfcbbqGbWqQsrFFztsppMFCzgCJzJCrFpCM"]
+ ["VRlhdHZTZVRRmZwlmFrJwFpMMDDrrrtJwg"]
+ ["PPVddvvDZmRmHvndTHmLcbcjSjLQBGWGGQWSqP"]
+ ["HHvgvwHMPMwHwmcRfJNFchFGNNCm"]
+ ["BsTDsjzBCCBJGffN"]
+ ["jznSnSdqzqnQTbdDljQjQSMHWWvvgWvtZlrWpPfWwtPr"]
+ ["DJCJJCNjCDRfDfDRhDnNhfjFPgbGbddBTjFdTFTPbpaGSdF"]
+ ["cmMcMVqBZVcwsGFgGqgWdFqb"]
+ ["vcZVzwmHVcrtrwMMvvmBHwNNCDpQRfhLhrNJNfJDDDRC"]
+ ["VWSSScsncpDRdnsWsVncVzTwMMMHtMTrLTLMMVHM"]
+ ["fjJvQqBCQNhfQlZZnqmFHLFMTFTzwzLzrHMB"]
+ ["CqfjjQZJPjjvpRppDPgbnSnP"]
+ ["tLnjNwjRWttdCwRLsfGzfzPbzbWbQQPT"]
+ ["cvvBvlBrFrlTffsbfTqZ"]
+ ["vmrFpsrvFMMMNwhtDwhN"]
+ ["wzgRNqwtgzMWtqGwCssBBSBZnSRsrQQS"]
+ ["bbjLTmpjpHcpVncVdmffPCDrjZDSDsZffDQC"]
+ ...)
+clj꞉aoc-2022.day04.solution꞉> 
+(def pairs (for [pair (str/split input-test #"\n")]
+             (into [] (for [sections (str/split pair #",")] sections))))
+#'aoc-2022.day04.solution/pairs
+clj꞉aoc-2022.day04.solution꞉> 
+#'aoc-2022.day04.solution/pairs
+clj꞉aoc-2022.day04.solution꞉> 
+pairs
+(["2-4" "6-8"] ["2-3" "4-5"] ["5-7" "7-9"] ["2-8" "3-7"] ["6-6" "4-6"] ["2-6" "4-8"])
+clj꞉aoc-2022.day04.solution꞉> 
 
-(\p \L \P \v \t \s)
-clj꞉aoc-2022.day03.solution꞉> 
-(int \a)
-97
-clj꞉aoc-2022.day03.solution꞉> 
-(int \z)
-122
-clj꞉aoc-2022.day03.solution꞉> 
-(int \z)
-122
-clj꞉aoc-2022.day03.solution꞉> 
-(int \A)
-65
-clj꞉aoc-2022.day03.solution꞉> 
-(int \a)
-97
-clj꞉aoc-2022.day03.solution꞉> 
-(int \Z)
-90
-clj꞉aoc-2022.day03.solution꞉> 
-(defn get-priority [type]
-  (cond
-    (<= 65 type 90) (- (int type) 38)
-    (<= 97 type 122) (- (int type) 96)))
-#'aoc-2022.day03.solution/get-priority
-clj꞉aoc-2022.day03.solution꞉> 
-(->> (for [backpack backpacks] (apply get-common-type backpack))
-     (apply mapv get-priority))
-; Execution error (IllegalArgumentException) at aoc-2022.day03.solution/eval8847 (form-init7797003569795930320.clj:247).
-; Don't know how to create ISeq from: java.lang.Character
-clj꞉aoc-2022.day03.solution꞉> 
-(for [backpack backpacks] (apply get-common-type backpack))
-(\p \L \P \v \t \s)
-clj꞉aoc-2022.day03.solution꞉> 
-(->> (for [backpack backpacks] (apply get-common-type backpack))
-     (mapv get-priority))
-; Execution error (ClassCastException) at aoc-2022.day03.solution/get-priority (form-init7797003569795930320.clj:242).
-; class java.lang.Character cannot be cast to class java.lang.Number (java.lang.Character and java.lang.Number are in module java.base of loader 'bootstrap')
-clj꞉aoc-2022.day03.solution꞉> 
-(for [backpack backpacks] (apply get-common-type backpack))
-(\p \L \P \v \t \s)
-clj꞉aoc-2022.day03.solution꞉> 
-(->> (for [backpack backpacks] (apply get-common-type backpack))
-     (apply mapv get-priority))
+(def pairs (for [pair (str/split input-real #"\n")]
+             (into [] (for [sections (str/split pair #",")] sections))))
+#'aoc-2022.day04.solution/pairs
+clj꞉aoc-2022.day04.solution꞉> 
+(->> (map #(Integer/parseInt %) (flatten split-pairs))
+     (partition 2)
+     (transpose)
+     (apply map #(range %1 (+ %2 1)))
+     (map set)
+     (partition 2)
+     (filter subset-of-other)
+     (count))
 
-; Execution error (IllegalArgumentException) at aoc-2022.day03.solution/eval8911 (form-init7797003569795930320.clj:263).
-; Don't know how to create ISeq from: java.lang.Character
-clj꞉aoc-2022.day03.solution꞉> 
-(->> (for [backpack backpacks] (apply get-common-type backpack))
-     (mapv get-priority))
-; Execution error (ClassCastException) at aoc-2022.day03.solution/get-priority (form-init7797003569795930320.clj:242).
-; class java.lang.Character cannot be cast to class java.lang.Number (java.lang.Character and java.lang.Number are in module java.base of loader 'bootstrap')
-clj꞉aoc-2022.day03.solution꞉> 
-(mapv int '(\p \L \P \v \t \s))
-[112 76 80 118 116 115]
-clj꞉aoc-2022.day03.solution꞉> 
-(defn get-priority [type]
-  (cond
-    (<= 65 (int type) 90) (- (int type) 38)
-    (<= 97 (int type) 122) (- (int type) 96)))
-#'aoc-2022.day03.solution/get-priority
-clj꞉aoc-2022.day03.solution꞉> 
-(->> (for [backpack backpacks] (apply get-common-type backpack))
-     (mapv get-priority))
+; Execution error (NumberFormatException) at java.lang.NumberFormatException/forInputString (NumberFormatException.java:65).
+; For input string: "jVTBgVbgJQVrTLRRsLvRzWcZvnDs"
+clj꞉aoc-2022.day04.solution꞉> 
+(def pairs (for [pair (str/split input-real #"\n")]
+             (into [] (for [sections (str/split pair #",")] sections))))
+#'aoc-2022.day04.solution/pairs
+clj꞉aoc-2022.day04.solution꞉> 
+(def split-pairs (for [pair pairs]
+                   (map #(str/split % #"-") pair)))
+#'aoc-2022.day04.solution/split-pairs
+clj꞉aoc-2022.day04.solution꞉> split-pairs
+((["jVTBgVbgJQVrTLRRsLvRzWcZvnDs"])
+ (["dhtmhfdfNlNNldfqmPCflqGbNZDHsDWcRzvczWsczZNzHz"])
+ (["tmwwwCCfbJSMbwMb"])
+ (["hsrZZhHlhrHmPPbMbDFDQdnQgLfMFDdDQQ"])
+ (["GpBtwtqrcCcjgnLgqfgDDgRn"])
+ (["cJwVwpCpGJctJtBcCrSCGrVJhlsbvSvTvbmHmmsWmHslmsHm"])
+ (["gCtWJvmfmGGwVVMhJw"])
+ (["nzRSpZbSVFFRDFSDzcplddqplqMhQMclMp"])
+ (["zFLszzRTDnZnbTZTRZsVNgCjrvfvgtvNmtfvLW"])
+ (["glRQRpQQtQtGtQws"])
+ (["TnmbLqvBFRFFLPBFnPbvRBhshTtHWhwzdwtHdsdzWhws"])
+ (["qmCLPNmCFnLBnmPPqVbFLRrJjVggDgJjlZVVDjDlDD"])
+ (["vRRgpWvPQFdTFDDNQs"])
+ (["bqtCmltmlbwqLVLZqwtmLBBTMcGBddTTBgFNGcZGMD"])
+ (["bbtmJmjlVlwblwwbwzbbvrrznvzShgRhRvhfWrWn"])
+ (["ZMhThfNcpbbMNNjsHpmpsRqsPmRs"])
+ (["wQjDgggQDPqqDlsD"])
+ (["SCwSzvLVCSVtQVgLnrccfdGdTdZfcZMtjJhG"])
+ (["wNnNmNHnNPPwwPGCrLSZZvdVVZvBtMMvdm"])
+ (["WQzlhzjzbBtMMlBrMl"])
+ (["szbgWhJjTTcsWTqgzsqcsGHfwNcwfwnHHrCGCPPGwr"])
+ (["CNsbpFCMSrmDhQHNNGmH"])
+ (["fQPPPcqvljQzjVDDgRBhGGqDgqqD"])
+ (["ZctlcVzcfltQtnrndbQMCM"])
+ (["NQjQjQvZvZjcvrrrNjgTQgBQwTJsJswJlbGstqqtmGhmwhqw"])
+ (["PWpHRzRnPHHSCnPFwlqhbtqGZClJqGqG"])
+ (["ZzVpMpWPHnVzzpWzDRzSZrcdDQdrQNrcQgQfjcNfjf"])
+ (["BSZMtdtZBzMFvhCbBJDbhDDC"])
+ (["qcqVVmccrmVcjrlHqTrjDJRPQhWvPWWfPvblffDf"])
+ (["cHTrbGwpmGwVjdFMnzpLznMztd"])
+ (["DGDGGbNgTgJQQLMRMMTNVzvPsPbdsfPVsdVVZfPf"])
+ (["lcCmmlpwwnwSjCHtFpCpHzCrZsVrBZZzdvDfVrsfZd"])
+ (["lSHwnjpFmppHqppttttcFmnhMLGNRLhTMDqJLQNLLQNLhJ"])
+ (["WqWfDWBjBjLbfcbbqGbWqQsrFFztsppMFCzgCJzJCrFpCM"])
+ (["VRlhdHZTZVRRmZwlmFrJwFpMMDDrrrtJwg"])
+ (["PPVddvvDZmRmHvndTHmLcbcjSjLQBGWGGQWSqP"])
+ (["HHvgvwHMPMwHwmcRfJNFchFGNNCm"])
+ (["BsTDsjzBCCBJGffN"])
+ (["jznSnSdqzqnQTbdDljQjQSMHWWvvgWvtZlrWpPfWwtPr"])
+ (["DJCJJCNjCDRfDfDRhDnNhfjFPgbGbddBTjFdTFTPbgGSdF"])
+ (["cmMcMVqBZVcwsGFgGqgWdFqb"])
+ (["vcZVzwmHVcrtrwMMvvmBHwNNCDpQRfhLhrNJNfJDDDRC"])
+ (["VWSSScsncpDRdnsWsVncVzTwMMMHtMTrLTLMMVHM"])
+ (["fjJvQqBCQNhfQlZZnqmFHLFMTFTzwzLzrHMB"])
+ (["CqfjjQZJPjjvpRppDPgbnSnP"])
+ (["tLnjNwjRWttdCwRLsfGzfzPbzbWbQQPT"])
+ (["cvvBvlBrFrlTffsbfTqZ"])
+ (["vmrFpsrvFMMMNwhtDwhN"])
+ (["wzgRNqwtgzMWtqGwCssBBSBZnSRsrQQS"])
+ (["bbjLTmpjpHcpVncVdmffPCDrjZDSDsZffDQC"])
+ ...)
+clj꞉aoc-2022.day04.solution꞉> 
 
-[16 38 42 22 20 19]
-clj꞉aoc-2022.day03.solution꞉> 
-(->> (for [backpack backpacks] (apply get-common-type backpack))
-     (mapv get-priority)
-     (reduce +))
-157
-clj꞉aoc-2022.day03.solution꞉> 
-(defn solve-a [input]
-  (let [backpacks (mapv #(split-at (/ (count %) 2) %) (str/split input #"\n"))]
-    (->> (for [backpack backpacks] (apply get-common-type backpack))
-         (mapv get-priority)
-         (reduce +))))
-#'aoc-2022.day03.solution/solve-a
-clj꞉aoc-2022.day03.solution꞉> 
-(solve-a input-test)
-157
-clj꞉aoc-2022.day03.solution꞉> 
-(solve-a input-real)
-; Syntax error compiling at (output.calva-repl:302:1).
-; Unable to resolve symbol: input-real in this context
-clj꞉aoc-2022.day03.solution꞉> 
-(def input-real (str/trim (slurp "./src/aoc_2022/day03/input_real")))
-#'aoc-2022.day03.solution/input-real
-clj꞉aoc-2022.day03.solution꞉> 
-(solve-a input-real)
-8109
-clj꞉aoc-2022.day03.solution꞉> 
-(defn get-common-type [bags]
-  (let [bag-sets (for [bag bags] (set bag))]
-    (nth (vec (apply clojure.set/intersection bag-sets)) 0)))
-#'aoc-2022.day03.solution/get-common-type
-clj꞉aoc-2022.day03.solution꞉> 
-(defn solve-a [input]
-  (let [backpacks (mapv #(split-at (/ (count %) 2) %) (str/split input #"\n"))]
-    (->> (for [backpack backpacks] (apply get-common-type backpack))
-         (mapv get-priority)
-         (reduce +))))
-#'aoc-2022.day03.solution/solve-a
-clj꞉aoc-2022.day03.solution꞉> 
-(solve-a input-real)
-; Execution error (ArityException) at aoc-2022.day03.solution/solve-a$iter$fn$fn (form-init7797003569795930320.clj:319).
-; Wrong number of args (2) passed to: aoc-2022.day03.solution/get-common-type
-clj꞉aoc-2022.day03.solution꞉> 
-(def input-test (str/trim (slurp "./src/aoc_2022/day03/input_test")))
-#'aoc-2022.day03.solution/input-test
-clj꞉aoc-2022.day03.solution꞉> 
-(solve-a input-test)
-; Execution error (ArityException) at aoc-2022.day03.solution/solve-a$iter$fn$fn (form-init7797003569795930320.clj:319).
-; Wrong number of args (2) passed to: aoc-2022.day03.solution/get-common-type
-clj꞉aoc-2022.day03.solution꞉> 
-(defn get-common-type [& bags]
-  (let [bag-sets (for [bag bags] (set bag))]
-    (nth (vec (apply clojure.set/intersection bag-sets)) 0)))
 
-#'aoc-2022.day03.solution/get-common-type
-clj꞉aoc-2022.day03.solution꞉> 
-(defn solve-a [input]
-  (let [backpacks (mapv #(split-at (/ (count %) 2) %) (str/split input #"\n"))]
-    (->> (for [backpack backpacks] (apply get-common-type backpack))
-         (mapv get-priority)
-         (reduce +))))
-#'aoc-2022.day03.solution/solve-a
-clj꞉aoc-2022.day03.solution꞉> 
-(solve-a input-test)
-157
-clj꞉aoc-2022.day03.solution꞉> 
-(let [groups (partition 3 (str/split input-test #"\n"))])
-nilgroups
-clj꞉aoc-2022.day03.solution꞉> 
-; Syntax error compiling at (output.calva-repl:1:7848).
-; Unable to resolve symbol: nilgroups in this context
-clj꞉aoc-2022.day03.solution꞉> re-groups(def groups (partition 3 (str/split input-test #"\n")))
-#'aoc-2022.day03.solution/groups
-clj꞉aoc-2022.day03.solution꞉> groups
-(("vJrwpWtwJgWrhcsFMMfFFhFp" "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL" "PmmdzqPrVvPwwTWBwg")
- ("wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn" "ttgJtRGJQctTZtZT" "CrZsJsPPZsGzwwsLwLmpwMDw"))
-clj꞉aoc-2022.day03.solution꞉> 
-(partition 3 (vec (str/split input-test #"\n")))
-(("vJrwpWtwJgWrhcsFMMfFFhFp" "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL" "PmmdzqPrVvPwwTWBwg")
- ("wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn" "ttgJtRGJQctTZtZT" "CrZsJsPPZsGzwwsLwLmpwMDw"))
-clj꞉aoc-2022.day03.solution꞉> 
-(partition 3 (vector (str/split input-test #"\n")))
-()
-clj꞉aoc-2022.day03.solution꞉> 
-(partition 3 (apply vector (str/split input-test #"\n")))
-(("vJrwpWtwJgWrhcsFMMfFFhFp" "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL" "PmmdzqPrVvPwwTWBwg")
- ("wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn" "ttgJtRGJQctTZtZT" "CrZsJsPPZsGzwwsLwLmpwMDw"))
-clj꞉aoc-2022.day03.solution꞉> 
-(partition 3 (str/split input-test #"\n"))
-(("vJrwpWtwJgWrhcsFMMfFFhFp" "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL" "PmmdzqPrVvPwwTWBwg")
- ("wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn" "ttgJtRGJQctTZtZT" "CrZsJsPPZsGzwwsLwLmpwMDw"))
-clj꞉aoc-2022.day03.solution꞉> 
-(vector (partition 3 (str/split input-test #"\n")))
-[(("vJrwpWtwJgWrhcsFMMfFFhFp" "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL" "PmmdzqPrVvPwwTWBwg")
-  ("wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn" "ttgJtRGJQctTZtZT" "CrZsJsPPZsGzwwsLwLmpwMDw"))]
-clj꞉aoc-2022.day03.solution꞉> 
-(apply vector (partition 3 (str/split input-test #"\n")))
-[("vJrwpWtwJgWrhcsFMMfFFhFp" "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL" "PmmdzqPrVvPwwTWBwg")
- ("wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn" "ttgJtRGJQctTZtZT" "CrZsJsPPZsGzwwsLwLmpwMDw")]
-clj꞉aoc-2022.day03.solution꞉> 
-(into [] (partition 3 (into [] (str/split input-test #"\n"))))
-[("vJrwpWtwJgWrhcsFMMfFFhFp" "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL" "PmmdzqPrVvPwwTWBwg")
- ("wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn" "ttgJtRGJQctTZtZT" "CrZsJsPPZsGzwwsLwLmpwMDw")]
-clj꞉aoc-2022.day03.solution꞉> 
-(partition 3 (into [] (str/split input-test #"\n")))
-(("vJrwpWtwJgWrhcsFMMfFFhFp" "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL" "PmmdzqPrVvPwwTWBwg")
- ("wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn" "ttgJtRGJQctTZtZT" "CrZsJsPPZsGzwwsLwLmpwMDw"))
-clj꞉aoc-2022.day03.solution꞉> 
-(into [] (str/split input-test #"\n")))
+(def input-real (str/trim (slurp "./src/aoc_2022/day04/input_real")))
+#'aoc-2022.day04.solution/input-real
+clj꞉aoc-2022.day04.solution꞉> 
+(def pairs (for [pair (str/split input-real #"\n")]
+             (into [] (for [sections (str/split pair #",")] sections))))
+#'aoc-2022.day04.solution/pairs
+clj꞉aoc-2022.day04.solution꞉> 
+(def split-pairs (for [pair pairs]
+                   (map #(str/split % #"-") pair)))
+#'aoc-2022.day04.solution/split-pairs
+clj꞉aoc-2022.day04.solution꞉> 
+(defn subset-of-other [set-pair]
+  (let [[a b] set-pair]
+    (or (clojure.set/subset? a b) (clojure.set/subset? b a))))
+#'aoc-2022.day04.solution/subset-of-other
+clj꞉aoc-2022.day04.solution꞉> 
+(->> (map #(Integer/parseInt %) (flatten split-pairs))
+     (partition 2)
+     (transpose)
+     (apply map #(range %1 (+ %2 1)))
+     (map set)
+     (partition 2)
+     (filter subset-of-other)
+     (count))
 
-(into [] (str/split input-test #"\n"))
-["vJrwpWtwJgWrhcsFMMfFFhFp"
- "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL"
- "PmmdzqPrVvPwwTWBwg"
- "wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn"
- "ttgJtRGJQctTZtZT"
- "CrZsJsPPZsGzwwsLwLmpwMDw"]
-clj꞉aoc-2022.day03.solution꞉> 
-(str/split input-test #"\n")
-["vJrwpWtwJgWrhcsFMMfFFhFp"
- "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL"
- "PmmdzqPrVvPwwTWBwg"
- "wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn"
- "ttgJtRGJQctTZtZT"
- "CrZsJsPPZsGzwwsLwLmpwMDw"]
-clj꞉aoc-2022.day03.solution꞉> 
-(into [] (partition 3 (str/split input-test #"\n")))
-[("vJrwpWtwJgWrhcsFMMfFFhFp" "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL" "PmmdzqPrVvPwwTWBwg")
- ("wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn" "ttgJtRGJQctTZtZT" "CrZsJsPPZsGzwwsLwLmpwMDw")]
-clj꞉aoc-2022.day03.solution꞉> 
-(partition 3 (str/split input-test #"\n"))
-(("vJrwpWtwJgWrhcsFMMfFFhFp" "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL" "PmmdzqPrVvPwwTWBwg")
- ("wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn" "ttgJtRGJQctTZtZT" "CrZsJsPPZsGzwwsLwLmpwMDw"))
-clj꞉aoc-2022.day03.solution꞉> 
-(map vector (partition 3 (str/split input-test #"\n")))
-([("vJrwpWtwJgWrhcsFMMfFFhFp" "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL" "PmmdzqPrVvPwwTWBwg")]
- [("wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn" "ttgJtRGJQctTZtZT" "CrZsJsPPZsGzwwsLwLmpwMDw")])
-clj꞉aoc-2022.day03.solution꞉> 
-(map #(into [] %) (partition 3 (str/split input-test #"\n")))
-(["vJrwpWtwJgWrhcsFMMfFFhFp" "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL" "PmmdzqPrVvPwwTWBwg"]
- ["wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn" "ttgJtRGJQctTZtZT" "CrZsJsPPZsGzwwsLwLmpwMDw"])
-clj꞉aoc-2022.day03.solution꞉> 
-(mapv #(into [] %) (partition 3 (str/split input-test #"\n")))
-[["vJrwpWtwJgWrhcsFMMfFFhFp" "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL" "PmmdzqPrVvPwwTWBwg"]
- ["wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn" "ttgJtRGJQctTZtZT" "CrZsJsPPZsGzwwsLwLmpwMDw"]]
-clj꞉aoc-2022.day03.solution꞉> 
-(defn solve-b [input]
-  (let [groups (mapv #(into [] %) (partition 3 (str/split input-test #"\n")))]
-    (->> (for [group groups] (apply get-common-type group))
-         (mapv get-priority)
-         (reduce +))))
-#'aoc-2022.day03.solution/solve-b
-clj꞉aoc-2022.day03.solution꞉> 
-(solve-b input-test)
-70
-clj꞉aoc-2022.day03.solution꞉> 
-(solve-b input-real)
-70
-clj꞉aoc-2022.day03.solution꞉> 
-; Aborting connect, error determining connect sequence.
-(solve-b input-real)
-
-70
-clj꞉aoc-2022.day03.solution꞉> 
-(def input-real (str/trim (slurp "./src/aoc_2022/day03/input_real")))
-#'aoc-2022.day03.solution/input-real
-clj꞉aoc-2022.day03.solution꞉> 
-(solve-b input-real)
-70
-clj꞉aoc-2022.day03.solution꞉> 
-(defn solve-b [input]
-  (let [groups (mapv #(into [] %) (partition 3 (str/split input-test #"\n")))]
-    (->> (for [group groups] (apply get-common-type group))
-         (mapv get-priority)
-         (reduce +))))
-#'aoc-2022.day03.solution/solve-b
-clj꞉aoc-2022.day03.solution꞉> 
-(solve-b input-real)
-70
-clj꞉aoc-2022.day03.solution꞉> 
-(def input-real (str/trim (slurp "./src/aoc_2022/day03/input_real")))
-#'aoc-2022.day03.solution/input-real
-clj꞉aoc-2022.day03.solution꞉> 
-(solve-b input-real)
-70
-clj꞉aoc-2022.day03.solution꞉> 
-(defn solve-b [input]
-  (let [groups (mapv #(into [] %) (partition 3 (str/split input #"\n")))]
-    (->> (for [group groups] (apply get-common-type group))
-         (mapv get-priority)
-         (reduce +))))
-
-#'aoc-2022.day03.solution/solve-b
-clj꞉aoc-2022.day03.solution꞉> 
-(solve-b input-real)
-2738
-clj꞉aoc-2022.day03.solution꞉> 
+595
+clj꞉aoc-2022.day04.solution꞉> 
+(defn overlap-at-all [set-pair]
+  (let [[a b] set-pair]
+    (not= #{} (clojure.set/intersection a b))))
+#'aoc-2022.day04.solution/overlap-at-all
+clj꞉aoc-2022.day04.solution꞉> 
+(->> (map #(Integer/parseInt %) (flatten split-pairs))
+     (partition 2)
+     (transpose)
+     (apply map #(range %1 (+ %2 1)))
+     (map set)
+     (partition 2)
+     (filter overlap-at-all)
+     (count))
+952
+clj꞉aoc-2022.day04.solution꞉> 
